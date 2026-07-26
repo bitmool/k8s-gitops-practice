@@ -56,8 +56,11 @@ git commit -m "First commit for CI/CD"
 # 4. 내 로컬 저장소와 깃허브 원격 저장소를 연결 (본인 주소로 수정 필수!)
 git remote add origin https://github.com/<본인의-깃허브-아이디>/<저장소이름>.git
 
-# 5. 깃허브로 쏘아 올리기!
-git push -u origin master
+# 5. 기본 브랜치 이름을 최신 표준인 main으로 변경
+git branch -M main
+
+# 6. 깃허브로 쏘아 올리기!
+git push -u origin main
 ```
 
 ### Step 3. GitHub 홈페이지에서 자동화 봇(Actions) 구경하기
