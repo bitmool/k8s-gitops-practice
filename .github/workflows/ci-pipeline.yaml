@@ -22,11 +22,11 @@ jobs:
     steps:
       # 1단계: 깃허브 서버로 내 소스 코드를 다운받아 옴
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # 2단계: GHCR(도커 레지스트리)에 로그인
       - name: Log in to the Container registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -34,7 +34,7 @@ jobs:
 
       # 3단계: Docker 이미지 굽고(Build) GHCR로 올리기(Push)
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: ./apps/hello-msa
           push: true
