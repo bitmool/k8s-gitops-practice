@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base
+
+patches:
+- path: patch.yaml
+
+# 배포되는 모든 리소스 이름 뒤에 -dev 를 붙입니다. (예: hello-msa-dev)
+nameSuffix: -dev

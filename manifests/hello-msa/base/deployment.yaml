@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-msa
+spec:
+  # Base에서는 파드 개수를 지정하지 않거나 1개로 둡니다.
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-msa
+  template:
+    metadata:
+      labels:
+        app: hello-msa
+    spec:
+      containers:
+      - name: hello-msa
+        image: ghcr.io/your-github-name/hello-msa:latest # 나중에 CI가 교체할 부분
+        ports:
+        - containerPort: 3000

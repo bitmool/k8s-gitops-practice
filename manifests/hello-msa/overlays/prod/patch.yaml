@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-msa
+spec:
+  # 운영 환경은 트래픽이 많으므로 3개의 파드로 배포합니다.
+  replicas: 3
+  template:
+    spec:
+      containers:
+      - name: hello-msa
+        env:
+        - name: ENV_NAME
+          value: "Production 🔥"
