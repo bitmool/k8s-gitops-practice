@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: hello-msa
-        image: ghcr.io/your-github-name/hello-msa:latest # 나중에 CI가 교체할 부분
+        image: ghcr.io/bitmool/k8s-gitops-practice/hello-msa:latest
         ports:
         - containerPort: 3000
