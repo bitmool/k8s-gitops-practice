@@ -4,7 +4,8 @@ name: CI Pipeline (Docker Build & Push)
 on:
   push:
     paths:
-      - 'apps/hello-msa/**'  # 이 폴더 안의 파일이 수정되었을 때만 작동!
+      - 'apps/hello-msa/**'
+      - '.github/workflows/**'
 
 env:
   REGISTRY: ghcr.io
