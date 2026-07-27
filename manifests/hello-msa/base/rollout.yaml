@@ -1,0 +1,51 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: hello-msa
+# spec:
+#   # Base에서는 파드 개수를 지정하지 않거나 1개로 둡니다.
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: hello-msa
+#   template:
+#     metadata:
+#       labels:
+#         app: hello-msa
+#     spec:
+#       containers:
+#       - name: hello-msa
+#         image: ghcr.io/bitmool/k8s-gitops-practice/hello-msa:latest
+#         ports:
+#         - containerPort: 3000
+
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: hello-msa
+  labels:
+    app: hello-msa
+spec:
+  replicas: 5 # 카나리 비율을 명확히 보기 위해 파드 개수를 5개로 늘립니다.
+  selector:
+    matchLabels:
+      app: hello-msa
+  template:
+    metadata:
+      labels:
+        app: hello-msa
+    spec:
+      containers:
+      - name: hello-msa
+        image: ghcr.io/bitmool/k8s-gitops-practice/hello-msa:latest # 🚨 본인의 이미지 경로가 맞는지 확인!
+        ports:
+        - containerPort: 3000
+  # 👇 여기서부터 카나리 배포 전략 설정!
+  strategy:
+    canary:
+      steps:
+      - setWeight: 20 # 1단계: 새 버전으로 트래픽의 20%만 보냄
+      - pause: {} # 2단계: 관리자가 수동으로 승인(Promote)할 때까지 무기한 대기!
+      - setWeight: 50 # 3단계: 승인되면 50%로 늘림
+      - pause: { duration: 10 } # 4단계: 10초 동안 자동 대기 후
+      # 5단계: 완료 (나머지 100% 전환)
