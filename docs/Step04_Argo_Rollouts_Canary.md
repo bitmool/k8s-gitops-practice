@@ -109,7 +109,19 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: hello-msa
-# 이하 내용은 그대로 유지
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: hello-msa
+        # [주의] Rollout 같은 커스텀 리소스는 Kustomize가 병합할 때 기존 값을 덮어써버리므로 아래 2개 속성을 반드시 다시 적어줘야 합니다!
+        image: ghcr.io/bitmool/k8s-gitops-practice/hello-msa:latest 
+        ports:
+        - containerPort: 3000
+        env:
+        - name: ENV_NAME
+          value: "Development 🛠️" # prod는 Production 🔥
 ```
 
 ### Step 4. 깃허브에 Push (GitOps 발동)

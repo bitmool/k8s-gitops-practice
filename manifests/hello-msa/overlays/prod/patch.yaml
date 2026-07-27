@@ -9,6 +9,9 @@ spec:
     spec:
       containers:
       - name: hello-msa
+        image: ghcr.io/bitmool/k8s-gitops-practice/hello-msa:latest
+        ports:
+        - containerPort: 3000
         env:
         - name: ENV_NAME
           value: "Production 🔥"
